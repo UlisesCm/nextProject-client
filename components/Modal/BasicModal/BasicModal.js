@@ -3,6 +3,7 @@
 import React from "react";
 import { Modal, Icon } from "semantic-ui-react";
 
+
 export default function BasicModal(props) {
   const { show, setShow, title, children, ...rest } = props;
 
