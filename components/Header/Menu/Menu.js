@@ -25,8 +25,13 @@ export default function MenuWeb() {
           </Grid.Column>
         </Grid>
       </Container>
-      <BasicModal show={showModal} setShow={setShowModal} title={titleModal} size='small'>
-        <Auth onCloseModal={onCloseModal} setTitleModal={setTitleModal}/>
+      <BasicModal
+        show={showModal}
+        setShow={setShowModal}
+        title={titleModal}
+        size="small"
+      >
+        <Auth onCloseModal={onCloseModal} setTitleModal={setTitleModal} />
       </BasicModal>
     </div>
   );
