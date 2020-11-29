@@ -12,13 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function MyApp({ Component, pageProps }) {
   const [auth, setAuth] = useState(undefined);
-  const [realoadUser, setRealoadUser] = useState(false)
+  const [reloadUser, setReloadUser] = useState(false);
   const router = useRouter();
 
 
   useEffect(() => {
     const token = getToken();
-    if(token){
+    if (token) {
       setAuth({
         token,
         idUser: jwtDecode(token).id,
@@ -26,8 +26,8 @@ export default function MyApp({ Component, pageProps }) {
     } else {
       setAuth(null);
     }
-    setRealoadUser(false)
-  }, [realoadUser])
+    setReloadUser(false);
+  }, [reloadUser]);
 
   const login = (token) => {
     setToken(token);
@@ -49,7 +49,7 @@ export default function MyApp({ Component, pageProps }) {
       auth,
       login,
       logout,
-      setRealoadUser,
+      setReloadUser,
     }),
     [auth]
   );
