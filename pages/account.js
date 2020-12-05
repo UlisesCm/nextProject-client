@@ -7,6 +7,7 @@ import { getMeApi } from "../api/user";
 import useAuth from "../hooks/useAuth";
 import ChangeNameForm from "../components/Account/ChangeNameForm";
 import ChangeEmailForm from "../components/Account/ChangeEmailForm";
+import ChangePasswordForm from "../components/Account/ChangePasswordForm";
 
 export default function account() {
   const [user, setUser] = useState(undefined);
@@ -53,6 +54,7 @@ function Configuration(props) {
           logout={logout}
           setReloadUser={setReloadUser}
         />
+        <ChangePasswordForm user={user} logout={logout} />
       </div>
     </div>
   );
