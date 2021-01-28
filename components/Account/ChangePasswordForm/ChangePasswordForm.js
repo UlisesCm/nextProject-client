@@ -1,19 +1,32 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import { updatePasswordApi } from "../../../api/user";
 
 export default function ChangePasswordForm(props) {
   const { user, logout } = props;
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Yup.object(validationSchema),
-    onSubmit: (formData) => {
-      console.log(formData);
+    onSubmit: async (formData) => {
+      setLoading(true);
+      const response = await updatePasswordApi(
+        user.id,
+        formData.password,
+        logout
+      );
+      if (!response) {
+        toast.error("Error al Actualizar la contraseña");
+      } else {
+        logout();
+      }
+      setLoading(false);
     },
   });
   return (
@@ -38,7 +51,9 @@ export default function ChangePasswordForm(props) {
             error={formik.errors.repeatPassword}
           />
         </Form.Group>
-        <Button className="submit">Actualizar</Button>
+        <Button className="submit" loading={loading}>
+          Actualizar
+        </Button>
       </Form>
     </div>
   );
