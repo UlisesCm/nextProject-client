@@ -6,10 +6,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
-import { createAddressApi } from "../../../api/address";
+import { createAddressApi, updateAddressApi } from "../../../api/address";
 
 export default function AddressFrom(props) {
-  const { setShowModal, setReloadAddresses } = props;
+  const { setShowModal, setReloadAddresses, newAddress, address } = props;
   const [loading, setLoading] = useState(false);
   const { auth, logout } = useAuth();
 
@@ -17,7 +17,6 @@ export default function AddressFrom(props) {
     initialValues: initialValues(address),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: (formData) => {
-      // createAddress(formData);
       newAddress ? createAddress(formData) : updateAddress(formData);
     },
   });
@@ -41,7 +40,22 @@ export default function AddressFrom(props) {
   };
 
   const updateAddress = (formData) => {
-    console.log("actualizando direccion");
+    console.log(formData);
+    setLoading(true);
+    const formDataTemp = {
+      ...formData,
+      user: auth.idUser,
+    };
+    const response = updateAddressApi(address._id, formDataTemp, logout);
+    if (!response) {
+      toast.warning("Error al actualizar la direccion");
+      setLoading(false);
+    } else {
+      formik.resetForm();
+      setReloadAddresses(true);
+      setLoading(false);
+      setShowModal(false);
+    }
   };
 
   return (
