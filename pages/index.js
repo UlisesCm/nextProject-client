@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {Loader} from "semantic-ui-react"
-import { size} from "lodash";
-import BasicLayout from '../layouts/BasicLayout'
+import { Loader } from "semantic-ui-react";
+import { size, map } from "lodash";
+import BasicLayout from "../layouts/BasicLayout";
 import { getLastGamesApi } from "../api/game";
-import ListGames from "../components/ListGames"
+import ListGames from "../components/ListGames";
 
 export default function Home() {
   const [games, setGames] = useState(null);
-  console.log(games)
+  console.log(games);
   useEffect(() => {
     (async () => {
       const response = await getLastGamesApi(50);
@@ -23,9 +23,7 @@ export default function Home() {
           <h3>No hay Juegos</h3>
         </div>
       )}
-      {size(games)>0 && (
-        <ListGames games={games}/>
-      )}
+      {size(games) > 0 && <ListGames games={games} />}
     </BasicLayout>
   );
 }
