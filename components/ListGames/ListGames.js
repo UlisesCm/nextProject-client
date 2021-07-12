@@ -4,16 +4,36 @@ import React from "react";
 import { map } from "lodash";
 import { Image, Grid } from "semantic-ui-react";
 import Link from "next/link";
+import useWindowSize from "../../hooks/useWindowSize";
+import {
+  breakpointUpSm,
+  breakpointUpMd,
+  breakpointUpLg,
+} from "./../../utils/breakpoint";
 
 export default function ListGames(props) {
   const { games } = props;
-  console.log(games);
+  const { width } = useWindowSize();
+
+  const getColumnsRender = () => {
+    switch (true) {
+      case width > breakpointUpLg:
+        return 5;
+      case width > breakpointUpMd:
+        return 3;
+      case width > breakpointUpSm:
+        return 2;
+      default:
+        return 1;
+    }
+  };
+
   return (
     <div className="list-games">
       <Grid>
-        <Grid.Row columns={5}>
+        <Grid.Row columns={getColumnsRender()}>
           {map(games, (game) => (
-            <Game game={game} />
+            <Game key={game.id} game={game} />
           ))}
         </Grid.Row>
       </Grid>
